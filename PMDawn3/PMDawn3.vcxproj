@@ -193,6 +193,7 @@
     <ClInclude Include="pch.h" />
     <ClInclude Include="PMDawn3.h" />
     <ClInclude Include="PMDawn3Dlg.h" />
+    <ClInclude Include="ProjectHandler.h" />
     <ClInclude Include="Resource.h" />
     <ClInclude Include="targetver.h" />
   </ItemGroup>
@@ -210,6 +211,7 @@
     </ClCompile>
     <ClCompile Include="PMDawn3.cpp" />
     <ClCompile Include="PMDawn3Dlg.cpp" />
+    <ClCompile Include="ProjectHandler.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ResourceCompile Include="PMDawn3.rc" />

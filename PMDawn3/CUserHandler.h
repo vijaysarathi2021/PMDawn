@@ -11,9 +11,9 @@ The user handler entity is completely responsible for features associated with u
 //Base class for all User entities
 class CUserHandler
 {
-	long m_lUserID;
-
+	
 public:
+	long m_lUserID;
 	CString m_strErrorMessage;
 
 	virtual CUserHandler* GetData() { return NULL; }
@@ -27,8 +27,10 @@ public:
 class CUserEngine
 {
 	//UserPrevilage m_UserPrevilage;
-	CUserHandler *m_userH[UserEntities::LAST - 1];
+	CUserHandler *m_userH[UserEntities::UE_LAST - 1];
+
 public:
+	bool ValidateInput(CUserHandler* pData);
 
 	CUserHandler* GetData(UserEntities which);
 	bool PutData(UserEntities which, CUserHandler* pData);
@@ -80,17 +82,24 @@ public:
 };
 
 
+/*
+Entity to handle and calculate analytics content like user productivity, work hours etc.,
+*/
 class CUserAnalyticsHandler : public CUserHandler
 {
 public:
 	virtual CUserHandler* GetData() { return this; }
+	/*
 	virtual bool PutData(CUserHandler* pData) { return true; }
 	virtual bool PostData(CUserHandler* pData) { return true; }
 	virtual bool DeleteData(CUserHandler* pData) { return true; }
+	*/
 
 };
 
-
+/*
+Entity to get the current status of the given user.
+*/
 class CUserStatusHandler : public CUserHandler
 {
 public:
@@ -101,25 +110,16 @@ public:
 };
 
 
+/*
+Entity to maintain the user profile information
+*/
 class CUserProfileHandler : public CUserHandler
 {
 
 public:
 	virtual CUserHandler* GetData() { return this; }
 	virtual bool PutData(CUserHandler* pData) { return true; }
-	virtual bool PostData(CUserHandler* pData) { return true; }
-	virtual bool DeleteData(CUserHandler* pData) { return true; }
-};
-
-
-class CUserCreateHandler : public CUserHandler
-{
-
-public:
-	
-	//CUserHandler* GetData() { return this; }
-	virtual bool PutData(CUserHandler* pData) { return true; }
-	virtual bool PostData(CUserHandler* pData) { return true; }
+	virtual bool PostData(CUserHandler* pData) { return true; }		//Method used to create new User Profile
 	virtual bool DeleteData(CUserHandler* pData) { return true; }
 };
 

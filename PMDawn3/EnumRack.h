@@ -32,6 +32,7 @@ enum SystemStatus
 //User Handler
 enum UserPrevilage
 {
+	SUPERUSER,
 	ADMIN,
 	STANDARD
 };
@@ -41,10 +42,40 @@ enum UserPrevilage
 enum UserEntities
 {
 	DASHBOARD,
-	TASK,
+	UE_TASK,
 	ANALYTICS,
-	PROFILE,
+	PROFILE,		//Creation of user profile subject to licensing/subscription - Accessible only for SuperUser
 	STATUS,
 	CREATE_NEW_USER,
-	LAST
+	UE_LAST
 };
+
+
+//Project Handler
+
+enum ProjectEntities
+{
+	PROJECT_PROFILE,
+	PROJECT_CONFIG,
+	PROJECT_SPRINT,
+	PE_LAST
+};
+
+//Task Status
+enum TaskStatus
+{
+	NEW,
+	IN_PROGRESS,
+	TRIAGE,
+	CLOSED   //Keep as Last in Enum
+};
+
+
+enum TaskType
+{
+	FEATURE,
+	BUG,
+	TASKS     //Keep as Last in Enum
+};
+
+
