@@ -132,7 +132,8 @@ class CTask //: public CProjectHandler
 
 	CString m_strTaskTitle;
 	CString m_strTaskDescription;
-	
+	CString m_strErrorMessage;
+
 	std::vector<CTask> m_SubTaskList;
 	
 	TaskStatus m_CurrentStatus;
@@ -142,12 +143,11 @@ class CTask //: public CProjectHandler
 	
 	std::vector<CTaskComments> m_vecTaskComments;
 
-
 public:
 	bool ValidateInput(CTask* pData);
 
 	virtual CTask* GetData() { return this; }
-	virtual bool PutData(CTask* pData) { return true; }
+	virtual bool PutData(CTask* pData);// { return true; }
 	virtual bool PostData(CTask* pData) { return true; }		//Reused to create New Project
 	virtual bool DeleteData(CTask* pData) { return true; }    //User Permission must be validated before delete
 };
