@@ -36,3 +36,15 @@ enum UserPrevilage
 	STANDARD
 };
 
+
+//User Entities
+enum UserEntities
+{
+	DASHBOARD,
+	TASK,
+	ANALYTICS,
+	PROFILE,
+	STATUS,
+	CREATE_NEW_USER,
+	LAST
+};
