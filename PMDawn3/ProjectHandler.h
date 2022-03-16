@@ -3,6 +3,14 @@
 #include "EnumRack.h"
 #include<vector>
 
+
+
+//Forward Declaration
+class CTask;
+class CProjectSprint;
+
+
+
 /*
 Base class for all project related entities
 */
@@ -23,9 +31,6 @@ public:
 };
 
 
-//Forward Declaration
-class CTask; 
-
 class CProjectEngine
 {
 	CProjectHandler* m_ProjectH[PE_LAST - 1];
@@ -42,12 +47,27 @@ public:
 
 //Well suited for Agile, 
 //In case of waterfall, the sprint will be only 1.
-class CProjectSprint : public CProjectHandler
+class CProjectRelease : public CProjectHandler
 {
-	long m_lSprintID;
-	std::vector<CTask> m_vecTasks;
+	long m_lProjectID;
+	long m_lRegionID;
+	long m_lReleaseID;
+	long m_lReleaseVersion;
+
+	std::vector<CString> m_ReleaseNotes;
+
+
+	std::vector<CProjectSprint> m_vecSprints;
 };
 
+
+class CProjectSprint
+{
+	long m_lSprintID;
+	long m_lReleaseID;
+
+	std::vector<CTask> m_vecTasks;
+};
 
 /*
 Entity to handle and calculate analytics content like Project productivity, 
@@ -95,6 +115,7 @@ class CProjectProfile :public CProjectHandler
 
 	std::vector<CProjectProfile> m_vecSubProjects;
 	std::vector<CTask> m_vecTasks;
+	std::vector<CProjectRelease> m_vecReleases;
 
 public:
 	bool ValidateInput(CProjectHandler* pData);
@@ -124,9 +145,10 @@ public:
 /*Entity consists of Task/Assigment/work items for the user*/
 class CTask //: public CProjectHandler
 {
+	long m_lTaskId;
 	long m_lProjectID;
 	long m_lRegionID;
-	long m_lTaskId;
+	long m_lSprintID;
 	long m_lParentTaskID; //Applicable only for sub task (-1 for Parent Task)
 	long m_lSubTaskCount;
 
@@ -144,7 +166,7 @@ class CTask //: public CProjectHandler
 	std::vector<CTaskComments> m_vecTaskComments;
 
 public:
-	bool ValidateInput(CTask* pData);
+	virtual bool ValidateInput(CTask* pData);
 
 	virtual CTask* GetData() { return this; }
 	virtual bool PutData(CTask* pData);// { return true; }

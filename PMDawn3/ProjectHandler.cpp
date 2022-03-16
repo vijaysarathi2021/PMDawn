@@ -13,6 +13,7 @@ bool CProjectHandler::ValidateInput(CProjectHandler* pData)
 
 bool CTask::PutData(CTask* pData)
 {
+	bool bRes = true;
 	if (pData)
 	{
 		//Validation for Closing the Task - All sub task must be closed
@@ -27,11 +28,13 @@ bool CTask::PutData(CTask* pData)
 				{
 					m_strErrorMessage.AppendFormat(L"\nSub Task - %d isn't in 'Closed' state", 
 						pData->m_SubTaskList[iSubtask].m_lTaskId);
-					return false;
+					bRes = false;
 				}
 			}
 		}
 
+		//Proceed for further update in the DB data 
+
 	}
-	return true;
+	return bRes;
 }
