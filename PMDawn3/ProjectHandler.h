@@ -4,7 +4,6 @@
 #include<vector>
 
 
-
 //Forward Declaration
 class CTask;
 class CProjectSprint;
@@ -19,6 +18,7 @@ class CProjectHandler
 	//Possibility of Project handled at multiple world regions
 	long m_lProjectID;
 	long m_lRegion;
+
 public:
 	CString m_strErrorMessage;
 
@@ -104,7 +104,7 @@ class CProjectConfig: public CProjectHandler
 /*Project profile - Consists of general details of the project*/
 class CProjectProfile :public CProjectHandler
 {
-	long m_lUserID;		//User who is performing project changes
+	std::vector<long> m_lUserID;		//Primary holders/Authorizer for the project
 	long m_lTaskCount;
 	long m_lSubProjectCount;
 
@@ -161,15 +161,30 @@ class CTask //: public CProjectHandler
 	TaskStatus m_CurrentStatus;
 	TaskType m_Type;
 	
-	int m_iStoryPoints;
+	int m_iStoryPoints;		//Story points illustration should be proportional to Task time
 	
+	//Time
+	int m_iTaskTimeEstimated;
+	int m_iTaskTimeCompleted;
+	int m_iTaskTimeAvailable;
+	
+	TaskTimeStatus m_TTStatus;
+
 	std::vector<CTaskComments> m_vecTaskComments;
+
+	//Private Member Methods
+	void UpdateTaskTimeStatus();
 
 public:
 	virtual bool ValidateInput(CTask* pData);
 
 	virtual CTask* GetData() { return this; }
 	virtual bool PutData(CTask* pData);// { return true; }
-	virtual bool PostData(CTask* pData) { return true; }		//Reused to create New Project
+	virtual bool PostData(CTask* pData)//Reused to create New Project
+	{
+		//perform update operation and update task time status
+		UpdateTaskTimeStatus();
+		return true;
+	}		
 	virtual bool DeleteData(CTask* pData) { return true; }    //User Permission must be validated before delete
 };

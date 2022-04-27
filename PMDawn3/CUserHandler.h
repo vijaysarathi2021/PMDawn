@@ -2,7 +2,8 @@
 
 #include "EnumRack.h"
 #include <vector>
-
+#include "ProjectHandler.h"
+#include <string>
 /*
 The user handler entity is completely responsible for features associated with users.
 */
@@ -11,7 +12,9 @@ The user handler entity is completely responsible for features associated with u
 //Base class for all User entities
 class CUserHandler
 {
-	
+	std::vector<CTask> m_vecTaskList;   //User Tasks
+	std::vector<int> m_vecProjectList;	//Project associated for the user
+
 public:
 	long m_lUserID;
 	CString m_strErrorMessage;
@@ -23,7 +26,7 @@ public:
 };
 
 
-
+//Mediator design pattern Entity
 class CUserEngine
 {
 	//UserPrevilage m_UserPrevilage;
@@ -59,6 +62,7 @@ Direct update is not applicable
 */
 class CUserDashboardHandler : public CUserHandler
 {
+
 public:
 	virtual CUserHandler* GetData() { return this; }
 	virtual bool PutData(CUserHandler* pData) { return false; }
@@ -73,7 +77,6 @@ Entity to handle Task/Assignment content
 */
 class CUserTaskHandler : public CUserHandler
 {
-
 public:
 	virtual CUserHandler* GetData() { return this; }
 	virtual bool PutData(CUserHandler* pData) { return true; }
@@ -115,6 +118,8 @@ Entity to maintain the user profile information
 */
 class CUserProfileHandler : public CUserHandler
 {
+	std::string m_strUserName;
+	std::vector<std::string> m_Project;	//User mapping in the project
 
 public:
 	virtual CUserHandler* GetData() { return this; }
